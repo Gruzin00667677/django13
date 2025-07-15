@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Категории</h1>
+    {% for category in categories %}
+        <p>
+            {% if category.image %}
+                <img src="{{ category.image.url }}" alt="">
+            {% endif %}
+            <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+        </p>
+    {% endfor %}
+{% endblock %}

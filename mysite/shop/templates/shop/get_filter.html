@@ -1,0 +1,11 @@
+<form action="{% url 'filter' %}" method="get">
+    <ul>
+        {% for brand in brands %}
+            <li>
+                <input type="checkbox" , name="brand" , value="{{ brand.id }}">
+                <span>{{ brand }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+    <button type="submit">Найти</button>
+</form>

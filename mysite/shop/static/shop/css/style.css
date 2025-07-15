@@ -1,0 +1,60 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: #c5c5c5;
+}
+.container{
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.header{
+    padding: 20px 0;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+.menu_list{
+    display: flex;
+    flex-wrap: wrap;
+}
+.menu_item{
+    margin-right: 60px;
+}
+.main{
+    display: flex;
+    flex-wrap: wrap;
+}
+.sidebar{
+    width: 200px;
+}
+.content{
+    flex: 1 0 auto;
+    padding: 10px;
+}
+.category_item{
+    padding: 5px 0;
+    border-bottom: 1px solid #000;
+}
+.form-error{
+    color: red;
+    padding: 10px;
+}
+.pagination{
+    display: flex;
+    gap: 10px;
+}
+.pagination li{
+    font-size: 24px;
+    border: 1px solid #000000;
+    padding: 5px 13px;
+    border-radius: 50%;
+}
+.form-control{
+    border: 1px solid red;
+}

@@ -1,0 +1,106 @@
+{% load static %}
+{% load shop_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>{% block title %}Интернет магазин{% endblock %}</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'shop/css/style.css' %}">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <div class="top_menu">
+            <ul class="menu_list">
+                <li class="menu_item"><a href="{% url 'index' %}">Главная</a></li>
+                <li class="menu_item"><a href="#">Магазин</a></li>
+                <li class="menu_item"><a href="{% url 'cat' %}">Категории</a></li>
+                {% if request.user.is_authenticated %}
+                    <li class="menu_item"><a href="{% url 'add_page' %}">Добавить</a></li>
+                {% endif %}
+                <li class="menu_item"><a href="#">Блог</a></li>
+                <li class="menu_item"><a href="#">О нас</a></li>
+                <li class="menu_item">
+                    <div class="cart">
+                        {% with total_items=cart|length %}
+                            {% if total_items > 0 %}
+                                Your cart:
+                                <a href="{% url "cart:cart_detail" %}">
+                                    {{ total_items }} item{{ total_items|pluralize }},
+                                    ${{ cart.get_total_price }}
+                                </a>
+                            {% elif not order %}
+                                Your cart is empty.
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="menu_item">{{ user.username }} | <a href="{% url 'logout' %}">Выход</a></li>
+                {% else %}
+                    <li class="menu_item"><a href="{% url 'login' %}">Вход</a></li>
+                    <li class="menu_item"><a href="{% url 'register' %}">Регистрация</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="search">
+            <form action="{% url 'search' %}" method="get">
+                <input type="search" name="search">
+                <button type="submit">Поиск</button>
+            </form>
+
+        </div>
+    </header>
+    <div class="main">
+        {% block sidebar %}
+            <div class="sidebar">
+                <h2>Категории</h2>
+                {% tag_categories %}
+                <div class="filter">
+                    <h2>Фильтр</h2>
+                    {% get_filter %}
+                </div>
+            </div>
+        {% endblock %}
+
+        <div class="content">
+            {% block content %}
+                Контент
+            {% endblock %}
+        </div>
+
+    </div>
+<div class="pag">
+    <h2>Пагинация</h2>
+{% if page_obj.has_other_pages %}
+    <ul class="pagination justify-content-center">
+
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?{{ s }}page=1">&laquo; first</a></li>
+            <li class="page-item"><a class="page-link"
+                                     href="?{{ s }}page={{ page_obj.previous_page_number }}">previous</a></li>
+        {% endif %}
+
+        {% for p in page_obj.paginator.page_range %}
+            {% if page_obj.number == p %}
+                <li class="page-item active"><a class="page-link" href="?{{ s }}page={{ p }}">{{ p }}</a></li>
+            {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+                <li class="page-item"><a class="page-link" href="?{{ s }}{{ s }}page={{ p }}">{{ p }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?{{ s }}page={{ page_obj.next_page_number }}">next</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="?{{ s }}page={{ page_obj.paginator.num_pages }}">last
+                &raquo;</a></li>
+        {% endif %}
+
+    </ul>
+{% endif %}
+</div>
+</div>
+
+</body>
+</html>

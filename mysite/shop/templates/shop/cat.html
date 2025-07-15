@@ -1,0 +1,5 @@
+<ul class="category">
+    {% for cat in category %}
+        <li class="category_item"><a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a></li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load shop_tags %}
+{% load static %}
+{#{% block sidebar %}#}
+{#    {% tag_categories %}#}
+{#{% endblock %}#}
+{% block content %}
+    <h1>{{ title }}</h1>
+    {% for product in products %}
+        {% if product.image %}
+            <a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" alt="{{ product.title }}"></a>
+        {% else %}
+            <a href="{{ product.get_absolute_url }}"><img src="{% static '/shop/img/noimg.png' %}" alt="{{ product.title }}"></a>
+        {% endif %}
+        <h2><a href="{{ product.get_absolute_url }}">{{ product }}</a></h2>
+        {% empty %}
+        <h1>Товары не найдены</h1>
+    {% endfor %}
+{% endblock %}
