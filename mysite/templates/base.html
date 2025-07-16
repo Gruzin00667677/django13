@@ -37,7 +37,11 @@
                     </div>
                 </li>
                 {% if user.is_authenticated %}
-                    <li class="menu_item">{{ user.username }} | <a href="{% url 'logout' %}">Выход</a></li>
+                    <li class="menu_item"><a href="{% url 'profile' %}">{{ user.username }}</a> | <a href="{% url 'logout' %}">Выход</a></li>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">logout</button>
+                    </form>
                 {% else %}
                     <li class="menu_item"><a href="{% url 'login' %}">Вход</a></li>
                     <li class="menu_item"><a href="{% url 'register' %}">Регистрация</a></li>
@@ -71,35 +75,36 @@
         </div>
 
     </div>
-<div class="pag">
-    <h2>Пагинация</h2>
-{% if page_obj.has_other_pages %}
-    <ul class="pagination justify-content-center">
+    <div class="pag">
+        <h2>Пагинация</h2>
+        {% if page_obj.has_other_pages %}
+            <ul class="pagination justify-content-center">
 
-        {% if page_obj.has_previous %}
-            <li class="page-item"><a class="page-link" href="?{{ s }}page=1">&laquo; first</a></li>
-            <li class="page-item"><a class="page-link"
-                                     href="?{{ s }}page={{ page_obj.previous_page_number }}">previous</a></li>
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?{{ s }}page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link"
+                                             href="?{{ s }}page={{ page_obj.previous_page_number }}">previous</a></li>
+                {% endif %}
+
+                {% for p in page_obj.paginator.page_range %}
+                    {% if page_obj.number == p %}
+                        <li class="page-item active"><a class="page-link" href="?{{ s }}page={{ p }}">{{ p }}</a></li>
+                    {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+                        <li class="page-item"><a class="page-link" href="?{{ s }}{{ s }}page={{ p }}">{{ p }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link"
+                                             href="?{{ s }}page={{ page_obj.next_page_number }}">next</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="?{{ s }}page={{ page_obj.paginator.num_pages }}">last
+                        &raquo;</a></li>
+                {% endif %}
+
+            </ul>
         {% endif %}
-
-        {% for p in page_obj.paginator.page_range %}
-            {% if page_obj.number == p %}
-                <li class="page-item active"><a class="page-link" href="?{{ s }}page={{ p }}">{{ p }}</a></li>
-            {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
-                <li class="page-item"><a class="page-link" href="?{{ s }}{{ s }}page={{ p }}">{{ p }}</a></li>
-            {% endif %}
-        {% endfor %}
-
-        {% if page_obj.has_next %}
-            <li class="page-item"><a class="page-link" href="?{{ s }}page={{ page_obj.next_page_number }}">next</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="?{{ s }}page={{ page_obj.paginator.num_pages }}">last
-                &raquo;</a></li>
-        {% endif %}
-
-    </ul>
-{% endif %}
-</div>
+    </div>
 </div>
 
 </body>

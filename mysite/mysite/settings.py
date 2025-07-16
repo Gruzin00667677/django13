@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     'shop.apps.ShopConfig',
-    'users.apps.UsersConfig',
+    'user.apps.UserConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
 ]
@@ -148,3 +148,13 @@ INTERNAL_IPS = [
 ]
 
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'login'
+LOGIN_URL = 'login'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'user.authentication.EmailBackend',
+]
+
+DEFAULT_USER_IMAGE = MEDIA_URL + 'users/noimg.png'
+AUTH_USER_MODEL = 'user.User'
