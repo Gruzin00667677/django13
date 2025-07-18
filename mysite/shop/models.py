@@ -52,7 +52,7 @@ class Product(models.Model):
     description = models.TextField(verbose_name='Описание')
     price = models.DecimalField(max_digits=7, default=0.00, decimal_places=2, verbose_name="Цена")
     created = models.DateField(auto_now_add=True, verbose_name='Дата создания', blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Категория")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Категория", related_name='products')
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.PUBLISHED, verbose_name='Статус')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, blank=True, null=True)
     image = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name="Фото", blank=True, null=True)
@@ -78,3 +78,12 @@ class Rubric(MPTTModel):
 
     class MPTTMeta:
         order_insertion_by = ['name']
+
+
+class Gallery(models.Model):
+    image = models.ImageField(upload_to='gallery/%Y/%m/%d', blank=True, null=True, verbose_name='Изображение')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+
+    class Meta:
+        verbose_name = 'Изображение'
+        verbose_name_plural = 'Галерея товаров'
