@@ -18,6 +18,15 @@
         {% endif %}
         <h2><a href="{{ product.get_absolute_url }}">{{ product }}</a></h2>
     {% endfor %}
+    {% for rubric in rubrics %}
+        {% if rubric.image %}
+            <a href="{{ rubric.get_absolute_url }}"><img src="{{ rubric.image.url }}" alt="{{ rubric.title }}"></a>
+        {% else %}
+            <a href="{{ rubric.get_absolute_url }}"><img src="{% static '/shop/img/noimg.png' %}"
+                                                          alt="{{ rubric.title }}"></a>
+        {% endif %}
+        <h2><a href="{{ rubric.get_absolute_url }}">{{ rubric }}</a></h2>
+    {% endfor %}
     <h2>Пагинация</h2>
 {% if page_obj.has_other_pages %}
     <ul class="pagination justify-content-center">

@@ -10,6 +10,8 @@ urlpatterns = [
     path('product/<slug:product_slug>/', ProductPageView.as_view(), name='product'),
     path('add/', AddPage.as_view(), name='add_page'),
     path('edit/<slug:slug>/', ProductEditPage.as_view(), name='edit_page'),
-    path('search/', SearchProducts.as_view(), name='search')
+    path('search/', SearchProducts.as_view(), name='search'),
+    path('rubric/<int:pk>/', RubricPageView.as_view(), name='rubrics'),
+    path('rubric/', RubricPage.as_view(), name='rub'),
 
 ]

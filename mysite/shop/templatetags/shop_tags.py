@@ -1,5 +1,5 @@
 from django import template
-from shop.models import Category, Brand
+from shop.models import Category, Brand, Rubric
 
 register = template.Library()
 
@@ -14,3 +14,7 @@ def tag_categories():
 def get_filter():
     brands = Brand.objects.all()
     return {'brands': brands}
+
+@register.simple_tag()
+def get_rub():
+    return Rubric.objects.all()

@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% block content %}
 {% load mptt_tags %}
     <ul>
@@ -12,4 +13,12 @@
             </li>
         {% endrecursetree %}
     </ul>
+    {% for rubric in rubrics %}
+        <p>
+            {% if rubric.image %}
+                <img src="{{ rubric.image.url }}" alt="">
+            {% endif %}
+            <a href="{{ rubric.get_absolute_url }}">{{ rubric.name }}</a>
+        </p>
+    {% endfor %}
 {% endblock %}

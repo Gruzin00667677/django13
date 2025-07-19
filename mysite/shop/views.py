@@ -173,3 +173,41 @@ class SearchProducts(ListView):
         context['s'] = f"search={self.request.GET.get('search')}&"
         return context
 
+
+def show_rubric(request, pk):
+    rubrics = Rubric.objects.all()
+    context = {
+        'rubrics': rubrics
+    }
+    return render(request, 'shop/test.html', context=context)
+
+
+class RubricPage(ListView):
+    model = Rubric
+    template_name = 'shop/rub.html'
+    context_object_name = 'rubrics'
+
+    def get_queryset(self):
+        return Rubric.objects.filter(parent=None)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Рубрики'
+        return context
+
+
+class RubricPageView(ListView):
+    model = Rubric
+    template_name = 'shop/index.html'
+    context_object_name = 'rubrics'
+    allow_empty = False
+
+    def get_queryset(self):
+        return Rubric.objects.filter(parent_id=self.kwargs['pk'])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = Rubric.objects.get(pk=self.kwargs['pk'])
+        context['now'] = timezone.now()
+        return context
+

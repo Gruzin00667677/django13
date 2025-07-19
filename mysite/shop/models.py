@@ -70,11 +70,14 @@ class Product(models.Model):
 
 
 class Rubric(MPTTModel):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=True, verbose_name='Рубрики')
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('rubrics', kwargs={'pk': self.pk})
 
     class MPTTMeta:
         order_insertion_by = ['name']

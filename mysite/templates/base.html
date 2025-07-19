@@ -16,6 +16,7 @@
                 <li class="menu_item"><a href="{% url 'index' %}">Главная</a></li>
                 <li class="menu_item"><a href="#">Магазин</a></li>
                 <li class="menu_item"><a href="{% url 'cat' %}">Категории</a></li>
+                <li class="menu_item"><a href="{% url 'rub' %}">Рубрики</a></li>
                 {% if request.user.is_authenticated %}
                     <li class="menu_item"><a href="{% url 'add_page' %}">Добавить</a></li>
                 {% endif %}
@@ -65,6 +66,21 @@
                     <h2>Фильтр</h2>
                     {% get_filter %}
                 </div>
+            {% get_rub as rubrics %}
+
+            {% load mptt_tags %}
+            <ul id="accordion">
+                {% recursetree rubrics %}
+                    <li>
+                        <a href="{{ node.get_absolute_url }}">{{ node.name }}</a>
+                        {% if not node.is_leaf_node %}
+                            <ul class="children">
+                                {{ children }}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endrecursetree %}
+            </ul>
             </div>
         {% endblock %}
 
