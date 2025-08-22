@@ -13,5 +13,4 @@ urlpatterns = [
     path('search/', SearchProducts.as_view(), name='search'),
     path('rubric/<int:pk>/', RubricPageView.as_view(), name='rubrics'),
     path('rubric/', RubricPage.as_view(), name='rub'),
-
 ]
