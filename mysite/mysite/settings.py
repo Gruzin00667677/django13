@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'user.apps.UserConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
+    'payments.apps.PaymentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -158,3 +159,6 @@ AUTHENTICATION_BACKENDS = [
 
 DEFAULT_USER_IMAGE = MEDIA_URL + 'users/noimg.png'
 AUTH_USER_MODEL = 'user.User'
+
+YOOKASSA_SHOP_ID = 'ваш_shop_id'  # Пример: 123456
+YOOKASSA_SECRET_KEY = 'ваш_секретный_ключ'  # Пример: test_abcdef...

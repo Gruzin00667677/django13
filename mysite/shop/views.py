@@ -30,8 +30,8 @@ class IndexView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Главная'
         message = "*ЗАЯВКА С САЙТА*:"
-        send_message(message)
-        return context
+        # send_message(message)
+        # return context
 
         # search_query = self.request.GET.get('search', 'Товары не найдены')
         # print(search_query)

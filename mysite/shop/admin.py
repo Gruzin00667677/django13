@@ -48,13 +48,19 @@ class BrandAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+    list_display_links = ('id', 'name')
+    prepopulated_fields = {'slug': ('name',)}
+
+
 
 
 
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
-admin.site.register(Tag)
+admin.site.register(Tag,TagAdmin)
 admin.site.register(Rubric, MPTTModelAdmin)
 admin.site.register(Brand, BrandAdmin)
 admin.site.register(Gallery)
